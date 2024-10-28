@@ -13,7 +13,7 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade', // Active le moteur de physique arcade
     arcade: {
-      debug: true // Active le mode debug pour voir les corps physiques
+      debug: false // Active le mode debug pour voir les corps physiques
     }
   },
   scene: [TrackScene]

@@ -1,17 +1,18 @@
 function trackGenerator(scene: Phaser.Scene) {
-    let stickWidth = 30; // Largeur du bâton
-    let stickHeight = 100; // Hauteur du bâton
-    const numberOfSticks = 10; // Nombre de bâtons pour former le chemin en S
+    let stickWidth = 50; // Largeur du bâton
+    let stickHeight = 220; // Hauteur du bâton
+    const numberOfSticks = 1; // Nombre de bâtons pour former le chemin en S
     const obstacleWidth = stickWidth;
     const obstacleHeight = stickWidth / 2;
+    const playerWidth = stickWidth / 2;
     const sticksArray = [];
     const bodyArray = [];
     const obstacleArray = [];
     const obstacleBodyArray = [];
 
     // Position initiale du premier bâton
-    let currentX = 500;
-    let currentY = 100;
+    let currentX = window.innerWidth /2;
+    let currentY = 0;
 
     let isHorizontal = false; // Alterne entre horizontal et vertical
     let isRight = false
@@ -32,7 +33,12 @@ function trackGenerator(scene: Phaser.Scene) {
     obstacle.fillRect(0, 0, obstacleWidth, obstacleHeight);
     obstacle.x = firstStick.x + stickWidth / 2 - obstacleWidth / 2;
     obstacle.y = firstStick.y + (stickHeight / 2) + stickWidth/2 - obstacleHeight / 2;
-    obstacleArray.push(obstacle);
+    const obstacleInfo = {
+        id: "-1",
+        obstacle : obstacle,
+        type: "first"
+    }
+    obstacleArray.push(obstacleInfo);
 
     // Créer un groupe statique pour les corps entourant le premier stick
     const staticBodies = scene.physics.add.staticGroup();
@@ -44,7 +50,12 @@ function trackGenerator(scene: Phaser.Scene) {
         obstacle.y + obstacleHeight / 2,
         ''
     ).setSize(obstacleWidth, obstacleHeight).setVisible(false);
-    obstacleBodyArray.push(firstObstacleBody);
+    const obstacleInfoBody = {
+        id: "-1",
+        body : firstObstacleBody,
+        type: "first"
+    }
+    obstacleBodyArray.push(obstacleInfoBody);
 
     // Créer les corps physiques entourant le premier stick
     // Corps physique au-dessus du stick
@@ -133,19 +144,29 @@ function trackGenerator(scene: Phaser.Scene) {
             currentY += stickHeight;
             isHorizontalLeftDirection = !isHorizontalLeftDirection
 
-            let obstacle = scene.add.graphics();
+            const obstacle = scene.add.graphics();
             obstacle.fillStyle(0xFFA500, 1);
             obstacle.fillRect(0, 0, obstacleHeight, obstacleWidth );
             obstacle.x = currentX + stickWidth / 2 - stickHeight / 2;
             obstacle.y = currentY - stickHeight  - (obstacleWidth - stickWidth);
-            obstacleArray.push(obstacle);
+            const obstacleInfo = {
+                id: `${i}`,
+                obstacle : obstacle,
+                type: "middle"
+            }
+            obstacleArray.push(obstacleInfo);
             
             const obstacleBody = obstacleBodies.create(
                 obstacle.x + obstacleWidth / 2 - obstacleHeight /2,
                 obstacle.y + obstacleHeight / 2 + obstacleHeight /2,
                 ''
             ).setSize(obstacleHeight, obstacleWidth).setVisible(false);
-            obstacleBodyArray.push(obstacleBody);
+            const obstacleInfoBody = {
+                id: `${i}`,
+                body : obstacleBody,
+                type: "middle"
+            }
+            obstacleBodyArray.push(obstacleInfoBody);
         }
         if (!isHorizontal) {
             stick.setRotation(0);
@@ -170,31 +191,73 @@ function trackGenerator(scene: Phaser.Scene) {
             ).setSize(stickWidth, isLastStick ? stickHeight : stickHeight - stickWidth).setVisible(false);
             bodyArray.push(rightBody);
 
-            let obstacle = scene.add.graphics();
+            const obstacle = scene.add.graphics();
             obstacle.fillStyle(0xFFA500, 1); // Couleur orange
             obstacle.fillRect(0, 0, obstacleWidth, obstacleHeight);
             obstacle.x = stick.x + stickWidth / 2 - obstacleWidth / 2;
             obstacle.y = stick.y + (stickHeight / 2) + stickWidth/2 - obstacleHeight / 2;
-            obstacleArray.push(obstacle);
+            const obstacleInfo = {
+                id: `${i}`,
+                obstacle : obstacle,
+                type: "middle"
+            }
+            obstacleArray.push(obstacleInfo);
 
             const obstacleBody = obstacleBodies.create(
                 obstacle.x + obstacleWidth / 2,
                 obstacle.y + obstacleHeight / 2,
                 ''
             ).setSize(obstacleWidth, obstacleHeight).setVisible(false);
-            obstacleBodyArray.push(obstacleBody);
-            
+            const obstacleInfoBody = {
+                id: `${i}`,
+                body : obstacleBody,
+                type: "middle"
+            }
+            obstacleBodyArray.push(obstacleInfoBody);
+
             currentX += stickWidth;
             isRight = !isRight;   
         }
         isHorizontal = !isHorizontal;
     }
+    if (numberOfSticks % 2 === 0) {
+        const lastObstacle = obstacleArray[obstacleArray.length - 2];
+        if(lastObstacle){
+            lastObstacle.obstacle.clear();
+            lastObstacle.obstacle.fillStyle(0x800080, 1); // Couleur violette
+            lastObstacle.obstacle.fillRect(0, 0, obstacleWidth, obstacleHeight);
+            lastObstacle.type = "last";
+            console.log(obstacleArray)
+            const lastObstacleBody = obstacleBodyArray[obstacleBodyArray.length - 2];
+            if(lastObstacleBody){
+                lastObstacleBody.type = "last"
+                console.log(obstacleBodyArray)
+            }
+        }
+    }else{
+        const lastObstacle = obstacleArray[obstacleArray.length - 1];
+        if(lastObstacle){
+            lastObstacle.obstacle.clear();
+            lastObstacle.obstacle.fillStyle(0x800080, 1); // Couleur violette
+            lastObstacle.obstacle.fillRect(0, 0, obstacleWidth, obstacleHeight);
+            lastObstacle.type = "last";
+            console.log(obstacleArray)
+            const lastObstacleBody = obstacleBodyArray[obstacleBodyArray.length - 1];
+            if(lastObstacleBody){
+                lastObstacleBody.type = "last"
+                console.log(obstacleBodyArray)
+            }
+        }
+
+    }
+
     return {
         x: firstStick.x + stickWidth / 2,
-        y: firstStick.y - stickHeight / 2 + (stickWidth *2),
+        y: firstStick.y + playerWidth,
         bodyArray: bodyArray,
         obstacleBodyArray: obstacleBodyArray,
-        obstacleArray: obstacleArray
+        obstacleArray: obstacleArray,
+        playerWidth: playerWidth
     };
 }
 
