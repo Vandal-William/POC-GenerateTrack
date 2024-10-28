@@ -1,9 +1,13 @@
 function trackGenerator(scene: Phaser.Scene) {
     let stickWidth = 30; // Largeur du bâton
     let stickHeight = 100; // Hauteur du bâton
-    const numberOfSticks = 6; // Nombre de bâtons pour former le chemin en S
+    const numberOfSticks = 10; // Nombre de bâtons pour former le chemin en S
+    const obstacleWidth = stickWidth;
+    const obstacleHeight = stickWidth / 2;
     const sticksArray = [];
     const bodyArray = [];
+    const obstacleArray = [];
+    const obstacleBodyArray = [];
 
     // Position initiale du premier bâton
     let currentX = 500;
@@ -23,8 +27,24 @@ function trackGenerator(scene: Phaser.Scene) {
     firstStick.x = currentX;
     firstStick.y = currentY;
 
+    let obstacle = scene.add.graphics();
+    obstacle.fillStyle(0xFFA500, 1); // Couleur orange
+    obstacle.fillRect(0, 0, obstacleWidth, obstacleHeight);
+    obstacle.x = firstStick.x + stickWidth / 2 - obstacleWidth / 2;
+    obstacle.y = firstStick.y + (stickHeight / 2) + stickWidth/2 - obstacleHeight / 2;
+    obstacleArray.push(obstacle);
+
     // Créer un groupe statique pour les corps entourant le premier stick
     const staticBodies = scene.physics.add.staticGroup();
+    const obstacleBodies = scene.physics.add.staticGroup();
+
+    // Ajouter un corps physique pour l'obstacle initial
+    const firstObstacleBody = obstacleBodies.create(
+        obstacle.x + obstacleWidth / 2,
+        obstacle.y + obstacleHeight / 2,
+        ''
+    ).setSize(obstacleWidth, obstacleHeight).setVisible(false);
+    obstacleBodyArray.push(firstObstacleBody);
 
     // Créer les corps physiques entourant le premier stick
     // Corps physique au-dessus du stick
@@ -32,7 +52,7 @@ function trackGenerator(scene: Phaser.Scene) {
         currentX + stickWidth / 2, // Centre horizontal aligné avec le stick
         currentY - stickWidth / 2, // Position juste au-dessus du stick
         ''
-    ).setSize(stickWidth, stickWidth).setVisible(false);
+    ).setSize(stickHeight, stickWidth).setVisible(false);
     bodyArray.push(topBody)
     // Corps à gauche du stick
     const leftBody = staticBodies.create(
@@ -52,28 +72,19 @@ function trackGenerator(scene: Phaser.Scene) {
     currentY += stickHeight;
 
     for (let i = 0; i < numberOfSticks; i++) {
-        // Créer un objet Graphics pour chaque bâton
-        let stick = scene.add.graphics();
-
-        // Définir couleur de remplissage verte et bordure noire
-        stick.fillStyle(0x00ff00, 1); // Vert rempli
-        stick.lineStyle(2, 0x000000, 1); // Bordure noire de 2px
-
-        // Vérifie si c'est le dernier bâton et `numberOfSticks` est pair
+        // Vérifie si c'est le dernier bâton
         const isLastStick = i === numberOfSticks-1;
-
-        // Dessiner le rectangle
+        let stick = scene.add.graphics();
+        stick.fillStyle(0x00ff00, 1);
+        stick.lineStyle(2, 0x000000, 1);
         stick.fillRect(0, 0, stickWidth, stickHeight);
         stick.strokeRect(0, 0, stickWidth, stickHeight);
         sticksArray.push(stick);
 
         if (isHorizontal) {
-            // Bâton horizontal, rotation 90 degrés
             stick.setRotation(Phaser.Math.DegToRad(90));
-            // Position du stick
             stick.x = currentX;
             stick.y = currentY;
-            // Ajouter les 4 corps physiques autour du bâton horizontal
             if(isHorizontalLeftDirection){
 
                 const topBody = staticBodies.create(
@@ -91,7 +102,6 @@ function trackGenerator(scene: Phaser.Scene) {
                 bodyArray.push(bottomBody);
 
             }else{
-
                 const topBody = staticBodies.create(
                     currentX - (stickHeight / 2) + stickWidth,
                     currentY - stickWidth / 2,
@@ -106,7 +116,6 @@ function trackGenerator(scene: Phaser.Scene) {
                 ).setSize(stickHeight, stickWidth).setVisible(false);
                 bodyArray.push(bottomBody);
             }
-
             const leftBody = staticBodies.create(
                 currentX - stickHeight - stickWidth / 2,
                 currentY + stickWidth / 2,
@@ -120,27 +129,34 @@ function trackGenerator(scene: Phaser.Scene) {
                 ''
             ).setSize(stickWidth, stickWidth).setVisible(false);
             bodyArray.push(rightBody);
-            // Placement à gauche ou à droite du bâton vertical précédent
-            currentX += -1 * stickWidth; // Se déplace latéralement
-            currentY += stickHeight; // Avance vers le bas pour connexion
+            currentX += -1 * stickWidth;
+            currentY += stickHeight;
             isHorizontalLeftDirection = !isHorizontalLeftDirection
-        } 
-        if (!isHorizontal) {
-            // Bâton vertical
-            stick.setRotation(0);
+
+            let obstacle = scene.add.graphics();
+            obstacle.fillStyle(0xFFA500, 1);
+            obstacle.fillRect(0, 0, obstacleHeight, obstacleWidth );
+            obstacle.x = currentX + stickWidth / 2 - stickHeight / 2;
+            obstacle.y = currentY - stickHeight  - (obstacleWidth - stickWidth);
+            obstacleArray.push(obstacle);
             
+            const obstacleBody = obstacleBodies.create(
+                obstacle.x + obstacleWidth / 2 - obstacleHeight /2,
+                obstacle.y + obstacleHeight / 2 + obstacleHeight /2,
+                ''
+            ).setSize(obstacleHeight, obstacleWidth).setVisible(false);
+            obstacleBodyArray.push(obstacleBody);
+        }
+        if (!isHorizontal) {
+            stick.setRotation(0);
             if(isRight){
-                // Position du stick
                 stick.x = isLastStick ? currentX - stickHeight + stickWidth : currentX
                 stick.y = currentY;
             }else {
-                // Position du stick
                 stick.x = isLastStick ? currentX : currentX - stickHeight + stickWidth;
                 stick.y = currentY;
-            }
-
-             // Ajouter les 2 corps physiques autour du bâton vertical (droite et gauche)
-             const leftBody = staticBodies.create(
+            }            
+            const leftBody = staticBodies.create(
                 stick.x - stickWidth / 2,
                 isLastStick ? stick.y + stickHeight / 2 : stick.y + (stickHeight / 2) + stickWidth / 2,
                 ''
@@ -154,18 +170,31 @@ function trackGenerator(scene: Phaser.Scene) {
             ).setSize(stickWidth, isLastStick ? stickHeight : stickHeight - stickWidth).setVisible(false);
             bodyArray.push(rightBody);
 
-            currentX += stickWidth;
-            isRight = !isRight
+            let obstacle = scene.add.graphics();
+            obstacle.fillStyle(0xFFA500, 1); // Couleur orange
+            obstacle.fillRect(0, 0, obstacleWidth, obstacleHeight);
+            obstacle.x = stick.x + stickWidth / 2 - obstacleWidth / 2;
+            obstacle.y = stick.y + (stickHeight / 2) + stickWidth/2 - obstacleHeight / 2;
+            obstacleArray.push(obstacle);
 
+            const obstacleBody = obstacleBodies.create(
+                obstacle.x + obstacleWidth / 2,
+                obstacle.y + obstacleHeight / 2,
+                ''
+            ).setSize(obstacleWidth, obstacleHeight).setVisible(false);
+            obstacleBodyArray.push(obstacleBody);
             
+            currentX += stickWidth;
+            isRight = !isRight;   
         }
-        // Alterne orientation pour le prochain bâton et inverse direction
         isHorizontal = !isHorizontal;
     }
     return {
         x: firstStick.x + stickWidth / 2,
-        y: firstStick.y + stickHeight / 2,
-        bodyArray: bodyArray
+        y: firstStick.y - stickHeight / 2 + (stickWidth *2),
+        bodyArray: bodyArray,
+        obstacleBodyArray: obstacleBodyArray,
+        obstacleArray: obstacleArray
     };
 }
 

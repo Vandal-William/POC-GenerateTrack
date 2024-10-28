@@ -14,7 +14,7 @@ export default class TrackScene extends Phaser.Scene {
     }
 
     create(): void {
-        const {x, y, bodyArray} = trackGenerator(this);
+        const {x, y, bodyArray, obstacleBodyArray} = trackGenerator(this);
         
         // Création du personnage (carré rouge)
         this.character = this.add.rectangle(x, y, 15, 15, 0xff0000);
@@ -31,6 +31,10 @@ export default class TrackScene extends Phaser.Scene {
           bodyArray.forEach(body => {
               this.physics.add.collider(this.character, body); // Ajouter une collision avec chaque corps
           });
+
+          obstacleBodyArray.forEach(body => {
+            this.physics.add.collider(this.character, body); // Ajouter une collision avec chaque corps
+        });
         
         // Configurer les touches directionnelles en vérifiant que `this.input.keyboard` n'est pas null
         if (this.input.keyboard) {
