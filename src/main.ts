@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import TrackScene from './Scenes/Track/TrackScene';
+import TrackScene from './scenes/Track/TrackScene';
 import '../index.css'
 
 const config: Phaser.Types.Core.GameConfig = {

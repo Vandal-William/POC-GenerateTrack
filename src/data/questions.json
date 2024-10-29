@@ -1,0 +1,113 @@
+[
+    {
+      "id": "1",
+      "text": "Quel est le nom du démon renard à neuf queues scellé en Naruto ?",
+      "responces": [
+        { "id": "1a", "text": "Kurama", "isCorrect": true },
+        { "id": "1b", "text": "Shukaku", "isCorrect": false },
+        { "id": "1c", "text": "Gyuki", "isCorrect": false },
+        { "id": "1d", "text": "Son Goku", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "2",
+      "text": "Qui est le sensei de Naruto, Sasuke et Sakura au début de la série ?",
+      "responces": [
+        { "id": "2a", "text": "Kakashi Hatake", "isCorrect": true },
+        { "id": "2b", "text": "Jiraiya", "isCorrect": false },
+        { "id": "2c", "text": "Itachi Uchiwa", "isCorrect": false },
+        { "id": "2d", "text": "Iruka Umino", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "3",
+      "text": "Quel est le rêve de Naruto Uzumaki ?",
+      "responces": [
+        { "id": "3a", "text": "Devenir Hokage", "isCorrect": true },
+        { "id": "3b", "text": "Vaincre Sasuke", "isCorrect": false },
+        { "id": "3c", "text": "Devenir le plus fort des ninjas", "isCorrect": false },
+        { "id": "3d", "text": "Fonder un clan", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "4",
+      "text": "Quel est le clan de Sasuke Uchiwa ?",
+      "responces": [
+        { "id": "4a", "text": "Uchiwa", "isCorrect": true },
+        { "id": "4b", "text": "Hyuga", "isCorrect": false },
+        { "id": "4c", "text": "Senju", "isCorrect": false },
+        { "id": "4d", "text": "Nara", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "5",
+      "text": "Comment s'appelle le pouvoir des yeux des membres du clan Uchiwa ?",
+      "responces": [
+        { "id": "5a", "text": "Sharingan", "isCorrect": true },
+        { "id": "5b", "text": "Byakugan", "isCorrect": false },
+        { "id": "5c", "text": "Rinnegan", "isCorrect": false },
+        { "id": "5d", "text": "Tenseigan", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "6",
+      "text": "Quel personnage est surnommé le 'démon du brouillard' ?",
+      "responces": [
+        { "id": "6a", "text": "Zabuza Momochi", "isCorrect": true },
+        { "id": "6b", "text": "Kisame Hoshigaki", "isCorrect": false },
+        { "id": "6c", "text": "Haku", "isCorrect": false },
+        { "id": "6d", "text": "Nagato", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "7",
+      "text": "Qui a été le quatrième Hokage du village de Konoha ?",
+      "responces": [
+        { "id": "7a", "text": "Minato Namikaze", "isCorrect": true },
+        { "id": "7b", "text": "Hiruzen Sarutobi", "isCorrect": false },
+        { "id": "7c", "text": "Hashirama Senju", "isCorrect": false },
+        { "id": "7d", "text": "Tobirama Senju", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "8",
+      "text": "Quelle est la spécialité du clan Akimichi ?",
+      "responces": [
+        { "id": "8a", "text": "Le contrôle du poids et des transformations physiques", "isCorrect": true },
+        { "id": "8b", "text": "Les illusions", "isCorrect": false },
+        { "id": "8c", "text": "Les techniques de marionnettes", "isCorrect": false },
+        { "id": "8d", "text": "La maîtrise des insectes", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "9",
+      "text": "Quel est le nom de l'organisation qui traque les Bijuu dans Naruto ?",
+      "responces": [
+        { "id": "9a", "text": "Akatsuki", "isCorrect": true },
+        { "id": "9b", "text": "Anbu", "isCorrect": false },
+        { "id": "9c", "text": "Sannin", "isCorrect": false },
+        { "id": "9d", "text": "Kara", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    },
+    {
+      "id": "10",
+      "text": "Quel est le nom de la technique interdite apprise par Naruto pour créer des clones ?",
+      "responces": [
+        { "id": "10a", "text": "Multi clonage (Kage Bunshin no Jutsu)", "isCorrect": true },
+        { "id": "10b", "text": "Clonage de substitution", "isCorrect": false },
+        { "id": "10c", "text": "Clonage élémentaire", "isCorrect": false },
+        { "id": "10d", "text": "Clonage illusoire", "isCorrect": false }
+      ],
+      "scoreGive": 1
+    }
+  ]
+  

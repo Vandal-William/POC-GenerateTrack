@@ -1,7 +1,8 @@
-function trackGenerator(scene: Phaser.Scene) {
+
+function trackGenerator(scene: Phaser.Scene, questions : integer) {
     let stickWidth = 50; // Largeur du bâton
     let stickHeight = 220; // Hauteur du bâton
-    const numberOfSticks = 1; // Nombre de bâtons pour former le chemin en S
+    const numberOfSticks = questions; // Nombre de bâtons pour former le chemin en S
     const obstacleWidth = stickWidth;
     const obstacleHeight = stickWidth / 2;
     const playerWidth = stickWidth / 2;
@@ -53,7 +54,8 @@ function trackGenerator(scene: Phaser.Scene) {
     const obstacleInfoBody = {
         id: "-1",
         body : firstObstacleBody,
-        type: "first"
+        type: "first",
+        question : null
     }
     obstacleBodyArray.push(obstacleInfoBody);
 
@@ -164,7 +166,8 @@ function trackGenerator(scene: Phaser.Scene) {
             const obstacleInfoBody = {
                 id: `${i}`,
                 body : obstacleBody,
-                type: "middle"
+                type: "middle",
+                question : null
             }
             obstacleBodyArray.push(obstacleInfoBody);
         }
@@ -211,7 +214,8 @@ function trackGenerator(scene: Phaser.Scene) {
             const obstacleInfoBody = {
                 id: `${i}`,
                 body : obstacleBody,
-                type: "middle"
+                type: "middle",
+                question : null
             }
             obstacleBodyArray.push(obstacleInfoBody);
 
